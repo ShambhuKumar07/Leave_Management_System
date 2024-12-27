@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Leave Application</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-color: #f0f8ff; /* Light blue background for a fresher look */
+            margin: 0;
+            padding: 0;
+            color: #333; /* Darker text for readability */
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .header {
+            background-color: #0078d4; /* Vibrant blue */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header div {
+            font-weight: bold;
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .header div:hover {
+            transform: scale(1.1);
+            color: #ffdd57; /* Highlight color */
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 6px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #0078d4;
+            box-shadow: 0 0 4px rgba(0, 120, 212, 0.5);
+            outline: none;
+        }
+        
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button.reset {
+            background-color: #ccc;
+            color: black;
+        }
+        
+        button:hover {
+            background-color: #005bb5;
+            transform: translateY(-2px);
+        }
+        
+        .dynamic-output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #eef6ff;
+            border-left: 4px solid #0078d4;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div><a href="{% url 'leave' %}" class="nav-link">📝 LEAVE
+        </a></div>
+        <div><a href="{% url 'special_application' %}" class="nav-link">🔖 SPECIAL APPLICATION
+        </a></div>
+        <div><a href="{% url 'Compensatory_off_Request' %}" class="nav-link">💻 COMPENSATORY OFF REQUEST
+        </a></div>
+    </div>
+
+
+    <!-- Form Section -->
+    <div class="form-container">
+        <form id="leave-form">
+            <!-- Leave Type -->
+            <label for="leave-type">Leave Type</label>
+            <select id="leave-type">
+                <option value="">Select</option>
+                <option value="Sick Leave">Sick Leave</option>
+                <option value="Earned Leave">Earned Leave</option>
+                <option value="Comp Off">Comp Off</option>
+            </select>
+
+            <!-- Date Selection Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="leave-from">Leave From Date</label>
+                    <input type="date" id="leave-from" onchange="showDayOptions()">
+                </div>
+                <div class="form-group">
+                    <label for="leave-to">Leave To Date</label>
+                    <input type="date" id="leave-to" onchange="calculateLeaveDays()">
+                </div>
+            </div>
+
+            <!-- Full/Half Day Options -->
+            <div class="form-row" id="day-options" style="display:none;">
+                <div class="form-group">
+                    <label for="full-half-day">Full/Half Day</label>
+                    <select id="full-half-day" onchange="toggleHalfDayOptions()">
+                        <option value="Full Day">Full Day</option>
+                        <option value="Half Day">Half Day</option>
+                    </select>
+                </div>
+                <div class="form-group" id="half-day-options" style="display:none;">
+                    <label for="first-second-half">First/Second Half</label>
+                    <select id="first-second-half">
+                        <option value="First Half">First Half</option>
+                        <option value="Second Half">Second Half</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Remarks -->
+            <label for="remarks">Remarks</label>
+            <textarea id="remarks" rows="4" placeholder="Enter remarks"></textarea>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <button type="button" onclick="submitForm()">Apply</button>
+                <button type="reset" class="reset" onclick="resetForm()">Reset</button>
+            </div>
+
+            <!-- Output Section -->
+            <div class="dynamic-output" id="output"></div>
+        </form>
+    </div>
+
+    <script>
+        function showDayOptions() {
+            const fromDate = document.getElementById("leave-from").value;
+            const dayOptions = document.getElementById("day-options");
+
+            if (fromDate) {
+                dayOptions.style.display = "flex";
+            } else {
+                dayOptions.style.display = "none";
+                document.getElementById("half-day-options").style.display = "none";
+            }
+        }
+
+        function toggleHalfDayOptions() {
+            const fullHalfDay = document.getElementById("full-half-day").value;
+            const halfDayOptions = document.getElementById("half-day-options");
+
+            if (fullHalfDay === "Half Day") {
+                halfDayOptions.style.display = "block";
+            } else {
+                halfDayOptions.style.display = "none";
+            }
+        }
+
+        function calculateLeaveDays() {
+            const fromDate = document.getElementById("leave-from").value;
+            const toDate = document.getElementById("leave-to").value;
+            const output = document.getElementById("output");
+
+            if (fromDate && toDate) {
+                const startDate = new Date(fromDate);
+                const endDate = new Date(toDate);
+
+                if (endDate >= startDate) {
+                    const days = (endDate - startDate) / (1000 * 3600 * 24) + 1;
+                    output.innerHTML = `Total Leave Days: ${days}`;
+                } else {
+                    output.innerHTML = "Error: 'Leave To Date' must be after 'Leave From Date'.";
+                }
+            } else {
+                output.innerHTML = "";
+            }
+        }
+
+        function submitForm() {
+            const leaveType = document.getElementById("leave-type").value;
+            const leaveFrom = document.getElementById("leave-from").value;
+            const leaveTo = document.getElementById("leave-to").value;
+            const fullHalfDay = document.getElementById("full-half-day").value;
+            const firstSecondHalf = document.getElementById("first-second-half").value;
+            const remarks = document.getElementById("remarks").value;
+
+            if (leaveType && leaveFrom && leaveTo) {
+                const dayDetails = fullHalfDay === "Half Day" ? ` (${firstSecondHalf})` : "";
+                alert(`Leave applied successfully!\n\nLeave Type: ${leaveType}\nFrom: ${leaveFrom}\nTo: ${leaveTo}\nFull/Half Day: ${fullHalfDay}${dayDetails}\nRemarks: ${remarks}`);
+                resetForm();
+            } else {
+                alert("Please fill all required fields.");
+            }
+        }
+
+        function resetForm() {
+            document.getElementById("leave-form").reset();
+            document.getElementById("output").innerHTML = "";
+            document.getElementById("day-options").style.display = "none";
+            document.getElementById("half-day-options").style.display = "none";
+        }
+    </script>
+</body>
+</html>

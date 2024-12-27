@@ -1,0 +1,207 @@
+{% extends 'core/sidebar.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9e6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    
+        .navbar div:hover {
+            text-decoration: underline;
+            color: #f8e825;
+        }
+    
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: rgb(192, 214, 202);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        table label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea,
+        select {
+            width: 98%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            background-color: #2e4b71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .buttons button:hover {
+            background-color: #1f3650;
+        }
+
+        .buttons button.back {
+            background-color: #5a5a5a;
+        }
+
+        .buttons button.back:hover {
+            background-color: #444444;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar" style="background-color: #334155; color: #fff; display: flex; justify-content: space-around; padding: 10px;">
+        <div><a href="{% url 'profile' %}" class="nav-link">
+            <i class="bi bi-person"></i> PERSONAL
+        </a></div>
+
+        <div><a href="{% url 'organization' %}" class="nav-link">
+            <i class="bi bi-briefcase"></i> ORGANISATION
+        </a></div>
+
+        <div><a href="{% url 'monthly_ctc' %}" class="nav-link">
+            <i class="bi bi-currency-dollar"></i> MONTHLY CTC
+        </a></div>
+
+        <div><a href="{% url 'yearly_ctc' %}" class="nav-link">
+            <i class="bi bi-calendar"></i> YEARLY CTC
+        </a></div>
+
+        <div><a href="{% url 'qualification' %}" class="nav-link">
+            <i class="bi bi-award"></i> QUALIFICATIONS
+        </a></div>
+
+        <div><a href="{% url 'previous_experience' %}" class="nav-link">
+            <i class="bi bi-clock"></i> PREVIOUS EXPERIENCE
+        </a></div>
+    </div>
+
+    <div class="container">
+        <h2>Experience</h2>
+        <p>Fill experience details.</p>
+        <form action="#" method="post">
+            <table>
+                <tr>
+                    <td><label for="organisation">Organisation</label></td>
+                    <td><input type="text" id="organisation" name="organisation"></td>
+                </tr>
+                <tr>
+                    <td><label for="period_from">Period From</label></td>
+                    <td><input type="date" id="period_from" name="period_from"></td>
+                </tr>
+                <tr>
+                    <td><label for="period_to">Period To</label></td>
+                    <td><input type="date" id="period_to" name="period_to"></td>
+                </tr>
+                <tr>
+                    <td><label for="last_salary">Last Salary</label></td>
+                    <td><input type="text" id="last_salary" name="last_salary"></td>
+                </tr>
+                <tr>
+                    <td><label for="start_designation">Start Designation</label></td>
+                    <td><input type="text" id="start_designation" name="start_designation"></td>
+                </tr>
+                <tr>
+                    <td><label for="last_designation">Last Designation</label></td>
+                    <td><input type="text" id="last_designation" name="last_designation"></td>
+                </tr>
+                <tr>
+                    <td><label for="reason_leaving">Reason of Leaving</label></td>
+                    <td><input type="text" id="reason_leaving" name="reason_leaving"></td>
+                </tr>
+                <tr>
+                    <td><label for="esi_no">ESI No.</label></td>
+                    <td><input type="text" id="esi_no" name="esi_no"></td>
+                </tr>
+                <tr>
+                    <td><label for="pf_no">PF No.</label></td>
+                    <td><input type="text" id="pf_no" name="pf_no"></td>
+                </tr>
+                <tr>
+                    <td><label for="industry_type">Industry Type</label></td>
+                    <td>
+                        <select id="industry_type" name="industry_type">
+                            <option value="Others" selected>Others</option>
+                            <option value="IT">IT</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="job_description">Job Description</label></td>
+                    <td><textarea id="job_description" name="job_description"></textarea></td>
+                </tr>
+            </table>
+            <div class="buttons">
+                <button type="submit">Save</button>
+                <button type="button" class="back" onclick="history.back()">← Back</button>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}

@@ -1,0 +1,100 @@
+    /* Navbar */
+    .navbar {
+        background-color: #334155;
+        color: #fff;
+        display: flex;
+        justify-content: space-around;
+        padding: 15px;
+    }
+    .navbar .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+    }
+    .navbar .nav-link:hover {
+        color: #f8e825;
+        text-decoration: underline;
+    }
+
+    /* Profile Container */
+    .profile-container {
+        display: flex;
+        max-width: 1000px;
+        margin: 20px auto;
+        background: #f9fafb;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-column, .right-column {
+        padding: 10px;
+    }
+    .left-column {
+        flex: 2;
+    }
+    .right-column {
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Inputs */
+    .input-group {
+        margin-bottom: 15px;
+    }
+    .input-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #374151;
+    }
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 5px;
+        background: #f9fafb;
+    }
+
+    /* Profile Image */
+    .profile-image {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto 10px;
+        background: #e5e7eb;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6b7280;
+        font-size: 14px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Upload Section */
+    .upload-section input[type="file"] {
+        margin: 10px 0;
+    }
+    .button-group button {
+        background-color: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+    }
+    .button-group button.clear {
+        background-color: #6b7280;
+    }
+    .button-group button:hover {
+        opacity: 0.9;
+    }
+
+    /* Footer */
+    .footer {
+        color: #374151;
+        font-size: 12px;
+        margin-top: 20px;
+        text-align: center;
+    }

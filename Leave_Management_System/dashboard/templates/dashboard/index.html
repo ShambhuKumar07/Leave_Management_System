@@ -1,0 +1,359 @@
+{% extends 'core/sidebar.html' %}
+{% load static %}
+
+{% block content %}
+<title>Dashboard</title>
+<h1>Leave Management System</h1>
+<br>
+<h3>Hi Applicant1</h3>
+<br>
+<h5>Upcoming Public Holidays</h5>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Date</th>
+            <th scope="col">Public Holiday</th>
+        </tr>
+    </thead>
+</table>
+<h6>Today's Birthday</h6>
+
+<!-- Birthday Image and Employee Details Table -->
+<div class="text-center" style="display: inline-block; width: 100%; max-width: 600px;"> 
+    <!-- Birthday Image -->
+    <img src="{% static 'images/birthday.jpg' %}" alt="Public Holiday Image" class="img-fluid" style="width: 100%; height: auto;">
+
+    <!-- Employee Details Table -->
+    <table class="table table-bordered mt-3" style="width: 100%; margin: 0 auto;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Emp_Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add rows dynamically here if needed -->
+        </tbody>
+    </table>
+</div>
+
+<br>
+<h3>Today Work Anniversary Employee's</h3>
+
+<table class="table table-bordered mt-3" >
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Emp_Code</th>
+            <th scope="col">Name</th>
+            <th scope="col">DOJ</th>
+            <th scope="col">Department</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Add rows dynamically here if needed -->
+    </tbody>
+</table>
+
+<h3>Attendance Calendar</h3>
+<div id="attendance-calendar" style="margin-top: 20px;">
+    <div class="container">
+        <div class="left">
+            <div class="calendar">
+                <div class="month">
+                    <i class="fas fa-angle-left prev"></i>
+                    <div class="date">December 2024</div>
+                    <i class="fas fa-angle-right next"></i>
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="days">
+                    <div class="day prev-date">30</div>
+                    <div class="day prev-date">31</div>
+                    <div class="day">1</div>
+                    <div class="day">2</div>
+                    <div class="day">3</div>
+                    <div class="day">4</div>
+                    <div class="day">5</div>
+                    <div class="day">6</div>
+                    <div class="day">7</div>
+                    <div class="day">8</div>
+                    <div class="day">9</div>
+                    <div class="day">10</div>
+                    <div class="day">11</div>
+                    <div class="day">12</div>
+                    <div class="day today active">13</div>
+                    <div class="day">14</div>
+                    <div class="day">15</div>
+                    <div class="day">16</div>
+                    <div class="day">17</div>
+                    <div class="day">18</div>
+                    <div class="day">19</div>
+                    <div class="day">20</div>
+                    <div class="day">21</div>
+                    <div class="day">22</div>
+                    <div class="day">23</div>
+                    <div class="day">24</div>
+                    <div class="day">25</div>
+                    <div class="day">26</div>
+                    <div class="day">27</div>
+                    <div class="day">28</div>
+                    <div class="day">29</div>
+                    <div class="day">30</div>
+                    <div class="day next-date">1</div>
+                    <div class="day next-date">2</div>
+                    <div class="day next-date">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="calendar-container">
+    <!-- Header -->
+    <div class="header">
+        <button>&lt;&lt; November</button>
+    </div>
+
+    <!-- Date -->
+    <div class="date-container">
+        <div>16</div>
+        <div style="font-size: 0.5em;">Monday 2024</div>
+    </div>
+
+    <!-- Month -->
+    <div class="month">December</div>
+
+    <!-- Cards -->
+    <div class="cards">
+        <div class="card blue">
+            <span>0</span>
+            Halfday
+        </div>
+        <div class="card orange">
+            <span>0</span>
+            Public Holiday
+        </div>
+        <div class="card grey">
+            <span>0</span>
+            Join/ Resign
+        </div>
+        <div class="card red">
+            <span>12</span>
+            Absent/ MIS
+        </div>
+        <div class="card brown">
+            <span>0</span>
+            Leave
+        </div>
+        <div class="card green">
+            <span>5</span>
+            Weekly Off
+        </div>
+        <div class="card grey">
+            <span>0</span>
+            Present
+        </div>
+        <div class="card blue">
+            <span>13</span>
+            Not Available
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+  :root {
+      --primary-clr: #b38add;
+  }
+
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+  }
+
+  body {
+      background-color: #e2e1dc;
+  }
+
+  .container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      color: #fff;
+      display: flex;
+      background-color: #373c4f;
+      margin: 0 auto;
+  }
+
+  .left {
+      width: 100%;
+      padding: 20px;
+  }
+
+  .calendar {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      color: #878895;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+  }
+
+  .calendar .month {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-transform: capitalize;
+  }
+
+  .calendar .weekdays {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: capitalize;
+  }
+
+  .calendar .days {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      font-size: 1rem;
+      font-weight: 500;
+  }
+
+  .calendar .days .day {
+      width: 14.28%;
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      color: var(--primary-clr);
+      border: 1px solid #f5f5f5;
+  }
+
+  .calendar .days .day:hover {
+      background-color: #f0f0f0;
+  }
+
+  .calendar .days .day.today {
+      font-weight: bold;
+      color: #fff;
+      background-color: var(--primary-clr);
+  }
+
+  .calendar .days .day.next-date,
+  .calendar .days .day.prev-date {
+      color: #d3d3d3;
+  }
+
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Container */
+.calendar-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #6b4ca1, #1b8dc1);
+    color: #fff;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+/* Header */
+.header {
+    background: #c4d822;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.header button {
+    background: #c4d822;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.header button:hover {
+    text-decoration: underline;
+}
+
+/* Date */
+.date-container {
+    margin: 20px auto;
+    background: #c4d822;
+    color: black;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Month */
+.month {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.card {
+    background-color: #0073aa;
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.card.orange { background-color: #ffae42; }
+.card.red { background-color: #d9534f; }
+.card.green { background-color: #90c83e; }
+.card.brown { background-color: #5a3e2b; }
+.card.grey { background-color: #aaa; }
+.card.blue { background-color: #0073aa; }
+
+/* Text */
+.card span {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+</style>
+{% endblock %}

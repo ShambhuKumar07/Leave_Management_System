@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f9f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #3c8dbc;
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            text-align: left;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .notification {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            position: relative;
+            background-color: #ffcccc; /* Optional background color */
+            padding: 5px 0;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            position: absolute;
+            animation: scroll-left 10s linear infinite;
+        }
+        
+        
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 10px;
+        }
+        .left-panel {
+            width: 40%;
+        }
+        .right-panel {
+            width: 55%;
+        }
+        .info {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 14px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section label {
+            display: block;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .form-section input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        .form-section button {
+            background-color: #3c8dbc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .form-section button:hover {
+            background-color: #367fa9;
+        }
+        .calendar {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+        }
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .calendar th, .calendar td {
+            border: 1px solid #dcdcdc;
+            text-align: center;
+            padding: 10px;
+        }
+        .calendar th {
+            background-color: #3c8dbc;
+            color: white;
+        }
+        .calendar .absent {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .calendar .halftime {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .calendar .weekly-off {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .note {
+            font-size: 12px;
+            color: #555;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            DAILY ATTENDANCE
+        </div>
+         
+
+        <div class="notification" id="notification">
+            <span id="BodyData_lbl_EarlyLatemsg" class="lblmessagecss">You are late by 2 hours 26 minutes.</span>
+        </div>
+        
+        <div class="content">
+            <div class="left-panel">
+                <div class="info">
+                    <p><strong>Official Timing:</strong> 09:00 AM to 06:00 PM</p>
+                    <p><strong>Your Current Location:</strong> <span id="location">Fetching...</span></p>
+                    <p><strong>Date:</strong> <span id="currentDate"></span></p>
+                    <p><strong>Time:</strong> <span id="currentTime"></span></p>
+                </div>
+                <div class="form-section">
+                    <label><input type="checkbox" id="inTime"> In Time</label>
+                    <label><input type="checkbox" id="outTime"> Out Time</label>
+                    <button onclick="saveAttendance()">Save</button>
+                </div>
+            </div>
+            <div class="right-panel">
+                <div class="calendar">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mon</th>
+                                <th>Tue</th>
+                                <th>Wed</th>
+                                <th>Thu</th>
+                                <th>Fri</th>
+                                <th>Sat</th>
+                                <th>Sun</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="weekly-off">1</td>
+                            </tr>
+                            <tr>
+                                <td class="absent">2</td>
+                                <td class="absent">3</td>
+                                <td class="absent">4</td>
+                                <td class="absent">5</td>
+                                <td class="absent">6</td>
+                                <td class="absent">7</td>
+                                <td class="weekly-off">8</td>
+                            </tr>
+                            <!-- Additional rows for the calendar -->
+                            <tr>
+                                <td class="absent">9</td>
+                                <td class="absent">10</td>
+                                <td class="absent">11</td>
+                                <td class="absent">12</td>
+                                <td class="absent">13</td>
+                                <td class="absent">14</td>
+                                <td class="weekly-off">15</td>
+                            </tr>
+
+                            <tr>
+                                <td class="absent">16</td>
+                                <td class="absent">17</td>
+                                <td class="halftime">18</td>
+                                <td class="absent">19</td>
+                                <td>20</td>
+                                <td>21</td>
+                                <td class="weekly-off">22</td>
+                            </tr>
+                            <tr>
+                                <td>23</td>
+                                <td class="halftime">24</td>
+                                <td class="absent">25</td>
+                                <td>26</td>
+                                <td>27</td>
+                                <td>28</td>
+                                <td class="weekly-off">29</td>
+                            </tr>
+                            <tr>
+                                <td>30</td>
+                                <td>31</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="note">
+            <p>To save your daily attendance, click the save button. Ensure that you cannot edit/delete this attendance. Out-time can only be saved after a minimum of 2 hours of shift time.</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to get the current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const date = now.toLocaleDateString();
+            const time = now.toLocaleTimeString();
+            document.getElementById('currentDate').textContent = date;
+            document.getElementById('currentTime').textContent = time;
+    
+            // Update notification if late
+            const officialStart = new Date();
+            officialStart.setHours(9, 0, 0, 0); // Official start time: 9:00 AM
+    
+            if (now > officialStart) {
+                const diffMs = now - officialStart; // Time difference in milliseconds
+                const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+                const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                
+                document.getElementById('notification').textContent = 
+                    `You are late by ${diffHours} hours ${diffMinutes} minutes.`;
+            } else {
+                document.getElementById('notification').textContent = ""; // Clear the notification if not late
+            }
+        }
+    
+        // Placeholder function to save attendance
+        function saveAttendance() {
+            const inTime = document.getElementById('inTime').checked;
+            const outTime = document.getElementById('outTime').checked;
+            alert(`Attendance saved!\nIn Time: ${inTime}\nOut Time: ${outTime}`);
+        }
+    
+        // Initial call to populate date and time
+        updateDateTime();
+        setInterval(updateDateTime, 1000); // Update every second
+    </script>
+    
+</body>
+</html>

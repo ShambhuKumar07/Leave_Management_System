@@ -1,0 +1,74 @@
+{% extends 'core/sidebar.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/styles1.css' %}"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/styles1.css' %}">
+
+
+</head>
+<!-- Navbar -->
+<div class="navbar">
+    <div><a href="{% url 'profile' %}" class="nav-link">
+        <i class="bi bi-person"></i> PERSONAL
+    </a></div>
+    <div><a href="{% url 'organization' %}" class="nav-link">
+        <i class="bi bi-briefcase"></i> ORGANISATION
+    </a></div>
+    <div><a href="{% url 'monthly_ctc' %}" class="nav-link">
+        <i class="bi bi-currency-dollar"></i> MONTHLY CTC
+    </a></div>
+    <div><a href="{% url 'yearly_ctc' %}" class="nav-link">
+        <i class="bi bi-calendar"></i> YEARLY CTC
+    </a></div>
+    <div><a href="{% url 'qualification' %}" class="nav-link">
+        <i class="bi bi-award"></i> QUALIFICATIONS
+    </a></div>
+    <div><a href="{% url 'previous_experience' %}" class="nav-link">
+        <i class="bi bi-clock"></i> PREVIOUS EXPERIENCE
+    </a></div>
+</div>
+
+<!-- Main Container -->
+<div class="profile-container">
+    {% for profile in profiles %}
+    <div class="left-column">
+        <form>
+            {% for field in profile %}
+            <div class="input-group">
+                <label for="{{ field.name }}">{{ field.verbose_name }}</label>
+                <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{ field.value }}" readonly>
+            </div>
+            {% endfor %}
+        </form>
+    </div>
+    {% endfor %}
+
+    <div class="right-column">
+        <div class="profile-image">
+            No image <br> available
+        </div>
+        <div class="upload-section">
+            <form>
+                <input type="file" accept=".jpg, .png, .gif, .jpeg, .bmp" />
+                <p>Upload files (JPG, PNG, etc.) under 1MB.</p>
+                <div class="button-group">
+                    <button type="submit">Save</button>
+                    <button type="reset" class="clear">Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    Please check your details. If any information is incorrect or missing, contact HR.
+</div>
+
+{% endblock %}
+

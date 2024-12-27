@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Leave Request Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+    
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    
+        .header {
+            background-color: #0078d4; /* Vibrant blue */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+    
+        .nav-link {
+            margin: 0 15px;
+            font-size: 16px;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+    
+        .header div {
+            font-weight: bold;
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .header div:hover {
+            transform: scale(1.1);
+            color: #ffdd57; /* Highlight color */
+        }
+        
+        .content-container {
+            background: white;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1 {
+            text-align: center;
+            color: #2C3E50;
+        }
+    
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+    
+        .form-group {
+            flex: 1;
+            min-width: 220px;
+            margin-right: 15px;
+        }
+    
+        .form-group:last-child {
+            margin-right: 0;
+        }
+    
+        .form-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+    
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+    
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #1abc9c;
+            box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+        }
+    
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+    
+        .buttons button {
+            background-color: #2C3E50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+    
+        .buttons button:hover {
+            background-color: #1A252F;
+        }
+    
+        .buttons button.reset {
+            background-color: #F8F9F9;
+            color: #555;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+    
+        .buttons button.reset:hover {
+            background-color: #E5E7E9;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+    
+            .form-group {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+    
+            .buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+    
+            .buttons button {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Tab Section -->
+    <div class="header">
+        <div><a href="{% url 'leave' %}" class="nav-link">📝 LEAVE
+        </a></div>
+        <div><a href="{% url 'special_application' %}" class="nav-link">🔖 SPECIAL APPLICATION
+        </a></div>
+        <div><a href="{% url 'Compensatory_off_Request' %}" class="nav-link">💻 COMPENSATORY OFF REQUEST
+        </a></div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="content-container">
+        <form id="leaveForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="workFromDate">Work From Date</label>
+                    <input type="date" id="workFromDate" required onchange="calculateLeaves()">
+                </div>
+                <div class="form-group">
+                    <label for="workToDate">Work To Date</label>
+                    <input type="date" id="workToDate" required onchange="calculateLeaves()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullHalfDay">Full/Half Day</label>
+                    <select id="fullHalfDay">
+                        <option value="Full Day">Full Day</option>
+                        <option value="Half Day">Half Day</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="noOfLeaves">No. of Leaves</label>
+                    <input type="number" id="noOfLeaves" min="0" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="leaveType">Leave Type</label>
+                    <select id="leaveType">
+                        <option value="COMP OFF">COMP OFF</option>
+                        <option value="SICK LEAVE">SICK LEAVE</option>
+                        <option value="CASUAL LEAVE">CASUAL LEAVE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="remark">Remark</label>
+                    <textarea id="remark" rows="2" placeholder="Enter remarks..."></textarea>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="buttons">
+                <button type="button" onclick="applyLeave()">Apply</button>
+                <button type="reset" class="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to calculate No. of Leaves
+        function calculateLeaves() {
+            const workFromDate = document.getElementById("workFromDate").value;
+            const workToDate = document.getElementById("workToDate").value;
+            const noOfLeavesInput = document.getElementById("noOfLeaves");
+
+            if (workFromDate && workToDate) {
+                const startDate = new Date(workFromDate);
+                const endDate = new Date(workToDate);
+
+                if (endDate >= startDate) {
+                    // Calculate total days (inclusive)
+                    const timeDifference = endDate - startDate;
+                    const totalDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)) + 1;
+
+                    noOfLeavesInput.value = totalDays; // Set calculated value
+                } else {
+                    alert("Work To Date cannot be before Work From Date.");
+                    noOfLeavesInput.value = 0;
+                }
+            } else {
+                noOfLeavesInput.value = 0; // Reset if dates are incomplete
+            }
+        }
+
+        // Function to submit the form
+        function applyLeave() {
+            const workFromDate = document.getElementById("workFromDate").value;
+            const workToDate = document.getElementById("workToDate").value;
+            const fullHalfDay = document.getElementById("fullHalfDay").value;
+            const noOfLeaves = document.getElementById("noOfLeaves").value;
+            const leaveType = document.getElementById("leaveType").value;
+            const remark = document.getElementById("remark").value;
+
+            if (workFromDate && workToDate && noOfLeaves > 0) {
+                alert(`Leave Application Submitted:\n
+                Work From: ${workFromDate}
+                Work To: ${workToDate}
+                Full/Half Day: ${fullHalfDay}
+                Number of Leaves: ${noOfLeaves}
+                Leave Type: ${leaveType}
+                Remark: ${remark}`);
+            } else {
+                alert("Please fill out all required fields correctly.");
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background-color: #0078d4; /* Vibrant blue */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header div {
+            font-weight: bold;
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .header div:hover {
+            transform: scale(1.1);
+            color: #ffdd57; /* Highlight color */
+        }
+        
+        
+        .header div a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        .header div a:hover {
+            color: #ffc107;
+        }
+        
+        .leave-section {
+            margin: 20px auto;
+            max-width: 90%;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leave-section h2 {
+            text-align: center;
+            background-color: #003366;
+            color: white;
+            margin: 0;
+            padding: 15px;
+            font-size: 1.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #ffc107;
+            color: #333;
+        }
+        
+        td:nth-child(2) {
+            background-color: #00bcd4;
+            color: white;
+        }
+        
+        td:nth-child(3) {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        td:nth-child(4) {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 0.85rem;
+            }
+        }
+        
+        .form-section {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        
+        .form-group {
+            flex: 1 1 30%;
+            margin: 10px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #003366;
+            box-shadow: 0 0 5px rgba(0, 51, 102, 0.5);
+        }
+        
+        textarea {
+            resize: none;
+        }
+        
+        .buttons {
+            text-align: center;
+            margin: 20px;
+        }
+        
+        .apply-btn, .reset-btn {
+            background-color: #003366;
+            color: white;
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .apply-btn:hover {
+            background-color: #00509e;
+            transform: scale(1.05);
+        }
+        
+        .reset-btn {
+            background-color: #ccc;
+            color: #333;
+        }
+        
+        .reset-btn:hover {
+            background-color: #bbb;
+            transform: scale(1.05);
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div><a href="{% url 'leave' %}" class="nav-link">📝 LEAVE
+        </a></div>
+        <div><a href="{% url 'special_application' %}" class="nav-link">🔖 SPECIAL APPLICATION
+        </a></div>
+        <div><a href="{% url 'Compensatory_off_Request' %}" class="nav-link">💻 COMPENSATORY OFF REQUEST
+        </a></div>
+    </div>
+
+    <!-- Leave Section -->
+    <div class="leave-section">
+        <h2>Leave Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Name</th>
+                    <th>Opening</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1.</td>
+                    <td>Earned Leave</td>
+                    <td>24.00</td>
+                    <td id="earned-leave">24.00</td>
+                </tr>
+                <tr>
+                    <td>2.</td>
+                    <td>Sick Leave</td>
+                    <td>14.00</td>
+                    <td id="sick-leave">14.00</td>
+                </tr>
+                <tr>
+                    <td>3.</td>
+                    <td>COMP OFF</td>
+                    <td>0.00</td>
+                    <td id="comp-off">0.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <div class="form-group">
+                <label for="leave-from">Leave From Date</label>
+                <input type="date" id="leave-from" onchange="calculateDays()">
+            </div>
+            <div class="form-group">
+                <label for="leave-to">Leave To Date</label>
+                <input type="date" id="leave-to" onchange="calculateDays()">
+            </div>
+            <div class="form-group">
+                <label for="no-leaves">No. of Leaves</label>
+                <input type="number" id="no-leaves" min="1" readonly>
+            </div>
+            <div class="form-group">
+                <label for="leave-type">Select Leave Type</label>
+                <select id="leave-type">
+                    <option value="">Select Leave Type</option>
+                    <option value="earned">Earned Leave</option>
+                    <option value="sick">Sick Leave</option>
+                    <option value="comp">COMP OFF</option>
+                </select>
+            </div>
+            <div class="form-group">
+                 
+                <select id="leave-day">
+                    <option value="">Fill Day</option>
+                    <option value="earned">Full Day</option>
+                    <option value="sick">Half Day</option>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="leave-reason">Select Reason</label>
+                <select id="leave-reason">
+                    <option value="">Select Reason</option>
+                    <option>Medical</option>
+                    <option>Personal</option>
+                    <option>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Remarks Section -->
+        <div class="form-group" style="margin: 20px;">
+            <label for="remarks">Remark</label>
+            <textarea id="remarks" rows="4"></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button class="apply-btn" onclick="applyLeave()">Apply</button>
+            <button class="reset-btn" onclick="resetForm()">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateDays() {
+            const fromDate = document.getElementById("leave-from").value;
+            const toDate = document.getElementById("leave-to").value;
+            const noOfLeaves = document.getElementById("no-leaves");
+
+            if (fromDate && toDate) {
+                const startDate = new Date(fromDate);
+                const endDate = new Date(toDate);
+                const timeDiff = endDate - startDate;
+
+                if (timeDiff >= 0) {
+                    const days = (timeDiff / (1000 * 3600 * 24)) + 1;
+                    noOfLeaves.value = days;
+                } else {
+                    noOfLeaves.value = 0;
+                    alert("Leave To Date must be greater than or equal to Leave From Date.");
+                }
+            }
+        }
+
+        function applyLeave() {
+            const leaveType = document.getElementById("leave-type").value;
+            const noOfLeaves = parseFloat(document.getElementById("no-leaves").value);
+
+            if (leaveType && noOfLeaves > 0) {
+                const availableLeaves = {
+                    earned: parseFloat(document.getElementById("earned-leave").innerText),
+                    sick: parseFloat(document.getElementById("sick-leave").innerText),
+                    comp: parseFloat(document.getElementById("comp-off").innerText)
+                };
+
+                if (availableLeaves[leaveType] >= noOfLeaves) {
+                    availableLeaves[leaveType] -= noOfLeaves;
+                    document.getElementById(`${leaveType}-leave`).innerText = availableLeaves[leaveType].toFixed(2);
+                    alert("Leave applied successfully!");
+                    resetForm();
+                } else {
+                    alert("Insufficient leave balance!");
+                }
+            } else {
+                alert("Please fill all fields correctly.");
+            }
+        }
+
+        function resetForm() {
+            document.getElementById("leave-from").value = "";
+            document.getElementById("leave-to").value = "";
+            document.getElementById("no-leaves").value = "";
+            document.getElementById("leave-type").value = "";
+            document.getElementById("leave-reason").value = "";
+            document.getElementById("remarks").value = "";
+        }
+    </script>
+</body>
+</html>

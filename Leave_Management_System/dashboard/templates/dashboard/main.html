@@ -1,0 +1,68 @@
+{% extends 'core/sidebar.html' %}
+{% load static %}
+
+{% block content %}
+<title>Dashboard</title>
+<h1>Leave Management System</h1>
+<br>
+<h3>Hi Applicant1</h3>
+<br>
+<h5>Upcoming Public Holidays</h5>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Sr. No.</th>
+            <th scope="col">Date</th>
+            <th scope="col">Public Holiday</th>
+        </tr>
+    </thead>
+</table>
+<h6>Today's Birthday</h6>
+
+<!-- Birthday Image and Employee Details Table -->
+<div class="text-center" style="display: inline-block; width: 100%; max-width: 600px;"> 
+    <!-- Birthday Image -->
+    <img src="{% static 'images/birthday.jpg' %}" alt="Public Holiday Image" class="img-fluid" style="width: 100%; height: auto;">
+
+    <!-- Employee Details Table -->
+    <table class="table table-bordered mt-3" style="width: 100%; margin: 0 auto;">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Emp_Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add rows dynamically here if needed -->
+        </tbody>
+    </table>
+</div>
+
+<br>
+<h3>Today Work Anniversary Employee's</h3>
+
+<table class="table table-bordered mt-3" >
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Emp_Code</th>
+            <th scope="col">Name</th>
+            <th scope="col">DOJ</th>
+            <th scope="col">Department</th>
+            <th scope="col">Location</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Add rows dynamically here if needed -->
+    </tbody>
+</table>
+
+<h3>Attendance Calender</h3>
+<div id="attendance-calendar" style="margin-top: 20px;">
+    <!-- Placeholder for calendar -->
+    <div id="calendar" style="width: 100%; max-width: 600px; margin: 0 auto;"></div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Calendar</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container */
+        .calendar-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: linear-gradient(to bottom, #6b4ca1, #1b8dc1);
+            color: #fff;
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: #c4d822;
+            color: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        .header button {
+            background: #c4d822;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .header button:hover {
+            text-decoration: underline;
+        }
+
+        /* Date */
+        .date-container {
+            margin: 20px auto;
+            background: #c4d822;
+            color: black;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        /* Month */
+        .month {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .card {
+            background-color: #0073aa;
+            color: white;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .card.orange { background-color: #ffae42; }
+        .card.red { background-color: #d9534f; }
+        .card.green { background-color: #90c83e; }
+        .card.brown { background-color: #5a3e2b; }
+        .card.grey { background-color: #aaa; }
+        .card.blue { background-color: #0073aa; }
+
+        /* Text */
+        .card span {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <!-- Header -->
+        <div class="header">
+            <button>&lt;&lt; November</button>
+        </div>
+
+        <!-- Date -->
+        <div class="date-container">
+            <div>16</div>
+            <div style="font-size: 0.5em;">Monday 2024</div>
+        </div>
+
+        <!-- Month -->
+        <div class="month">December</div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card blue">
+                <span>0</span>
+                Halfday
+            </div>
+            <div class="card orange">
+                <span>0</span>
+                Public Holiday
+            </div>
+            <div class="card grey">
+                <span>0</span>
+                Join/ Resign
+            </div>
+            <div class="card red">
+                <span>12</span>
+                Absent/ MIS
+            </div>
+            <div class="card brown">
+                <span>0</span>
+                Leave
+            </div>
+            <div class="card green">
+                <span>5</span>
+                Weekly Off
+            </div>
+            <div class="card grey">
+                <span>0</span>
+                Present
+            </div>
+            <div class="card blue">
+                <span>13</span>
+                Not Available
+            </div>
+        </div>
+    </div>
+</body>
+</html>

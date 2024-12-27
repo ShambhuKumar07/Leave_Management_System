@@ -1,0 +1,195 @@
+{% extends 'core/sidebar.html' %}
+{% load static %}
+
+{% block title %}
+Qualification Form
+{% endblock %}
+
+{% block content %}
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div><a href="{% url 'profile' %}" class="nav-link">
+            <i class="bi bi-person"></i> PERSONAL
+        </a></div>
+        <div><a href="{% url 'organization' %}" class="nav-link">
+            <i class="bi bi-briefcase"></i> ORGANISATION
+        </a></div>
+        <div><a href="{% url 'monthly_ctc' %}" class="nav-link">
+            <i class="bi bi-currency-dollar"></i> MONTHLY CTC
+        </a></div>
+        <div><a href="{% url 'yearly_ctc' %}" class="nav-link">
+            <i class="bi bi-calendar"></i> YEARLY CTC
+        </a></div>
+        <div><a href="{% url 'qualification' %}" class="nav-link">
+            <i class="bi bi-award"></i> QUALIFICATIONS
+        </a></div>
+        <div><a href="{% url 'previous_experience' %}" class="nav-link">
+            <i class="bi bi-clock"></i> PREVIOUS EXPERIENCE
+        </a></div>
+    </div>
+
+
+<div class="container">
+
+    
+    <h2>Qualification</h2>
+    <p>Fill qualification details.</p>
+    <form action="#" method="post">
+        <table>
+            <tr>
+                <td><label for="qualification">Qualification</label></td>
+                <td><input type="text" id="qualification" name="qualification"></td>
+            </tr>
+            <tr>
+                <td><label for="university">University</label></td>
+                <td><input type="text" id="university" name="university"></td>
+            </tr>
+            <tr>
+                <td><label for="period_from">Period From</label></td>
+                <td><input type="date" id="period_from" name="period_from"></td>
+            </tr>
+            <tr>
+                <td><label for="period_to">Period To</label></td>
+                <td><input type="date" id="period_to" name="period_to"></td>
+            </tr>
+            <tr>
+                <td><label for="percentage">Percentage</label></td>
+                <td><input type="text" id="percentage" name="percentage"></td>
+            </tr>
+            <tr>
+                <td><label for="qualification_type">Qualification Type</label></td>
+                <td>
+                    <select id="qualification_type" name="qualification_type">
+                        <option value="" disabled selected>Select</option>
+                        <option value="diploma">Diploma</option>
+                        <option value="bachelors">Bachelors</option>
+                        <option value="masters">Masters</option>
+                        <option value="phd">PhD</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="institute">Institute</label></td>
+                <td><input type="text" id="institute" name="institute"></td>
+            </tr>
+            <tr>
+                <td><label for="remark">Remark</label></td>
+                <td><textarea id="remark" name="remark"></textarea></td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <button type="submit">Save</button>
+            <button type="button" class="back" onclick="history.back()">← Back</button>
+        </div>
+    </form>
+</div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9e6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    
+        .navbar div:hover {
+            text-decoration: underline;
+            color: #f8e825;
+        }
+    
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            {% comment %} background-color: #fafafa; {% endcomment %}
+            background:rgb(192, 214, 202);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        table label {
+            font-weight: bold;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 98%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 60px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            background-color: #2e4b71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .buttons button:hover {
+            background-color: #1f3650;
+        }
+
+        .buttons button.back {
+            background-color: #5a5a5a;
+        }
+
+        .buttons button.back:hover {
+            background-color: #444444;
+        }
+    </style>
+ 
+
+
+{% endblock %}
